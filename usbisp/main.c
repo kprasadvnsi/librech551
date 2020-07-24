@@ -89,8 +89,7 @@ int write_to_device(unsigned char *data, int size)
 int read_from_device(unsigned char *data, int size)
 {
 	int actual_length;
-	int rc = libusb_bulk_transfer(devh, ep_in_addr, data, size, &actual_length,
-								  400000);
+	int rc = libusb_bulk_transfer(devh, ep_in_addr, data, size, &actual_length, 400000);
 	if (rc == LIBUSB_ERROR_TIMEOUT) {
 		printf("timeout (%d)\n", actual_length);
 		return -1;
@@ -227,7 +226,7 @@ int main(int argc, char **argv)
 
 	/* Set debugging output to max level.
 	 */
-	libusb_set_debug(NULL, 3);
+	libusb_set_option(NULL, LIBUSB_OPTION_LOG_LEVEL, LIBUSB_LOG_LEVEL_INFO);
 
 	/* Look for a specific device and open it.
 	 */
